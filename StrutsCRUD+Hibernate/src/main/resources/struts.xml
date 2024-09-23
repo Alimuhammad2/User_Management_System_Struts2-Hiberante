@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="default" extends="struts-default">
+
+		<!-- <action name="login" class="Action.Login" method="validate"> <result 
+			name="success">welcome.jsp</result> <result name="error">error.jsp</result> 
+			</action> -->
+
+
+<!-- Register the custom interceptor -->
+        <interceptors>
+            <interceptor name="ipInterceptor" class="Interceptor.MyInterceptor"/>
+            <interceptor-stack name="customStack">
+                <interceptor-ref name="ipInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+
+		<!-- Step 1: Define Interceptor -->
+		<!-- <interceptors>
+			<interceptor name="logging" class="Interceptor.MyInterceptor" /> -->
+			<!-- Default interceptors provided by Struts2 -->
+			<!-- <interceptor-stack name="defaultStack">
+				<interceptor-ref name="logging" />
+				<interceptor-ref name="defaultStack" /> Keep the default interceptors
+			</interceptor-stack>
+		</interceptors> -->
+
+		<action name="userregister" class="Entity.user" method="Add">
+			<interceptor-ref name="customStack"/>
+			<result name="success">userregister.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
+
+		<action name="showdata" class="Entity.user" method="getAllStudents">
+			<result name="success">showdata.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
+		
+		<action name="getAllStudents" class="Entity.user" method="getAllStudents">
+  	 	 <result name="success">showdata.jsp</result>
+		</action>
+		
+		<action name="updatestudent" class="Entity.user" method="updateStudent">
+			<interceptor-ref name="defaultStack" />
+			<result name="success">welcome.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
+
+		<action name="updatedStudent" class="Entity.user" method="updatedStudent">
+			<result name="success">showdata.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
+
+		<action name="deletestudent" class="Entity.user" method="deletedstudent" >
+			<result name="success">showdata.jsp</result>
+			<result name="fail">error.jsp</result>
+		</action>
+
+		<action name="userlogin" class="Entity.user" method="loginuser">
+		<interceptor-ref name="customStack"/>
+			<result name="success">userdata.jsp</result>
+			<result name="fail">userlogin.jsp</result>
+		</action>
+		
+		
+		
+		<!-- this is search bar action -->
+		 <action name="searchUser" class="Entity.user" method="searchUser">
+		<interceptor-ref name="customStack"/>
+			<result name="success">showdata.jsp</result>
+			<!-- <result name="fail">userlogin.jsp</result> -->
+		</action> 
+		
+		<action name="logout" class="Entity.Logout" method="execute">
+		<interceptor-ref name="customStack"/>
+			<result name="success">userlogin.jsp</result>
+			<!-- <result name="fail">userlogin.jsp</result> -->
+		</action>
+		
+		<!-- <action name="userdata" class="Entity.user" method="loginuser"> <result 
+			name="success">welcome.jsp</result> <result name="fail">error.jsp</result> 
+			</action> -->
+
+		<!-- <action name="deleteStudent" class="myStructmaven.actions.deleteAction" 
+			method="deleteStudent"> <result name="success" type="redirectAction">login.action</result> 
+			<result name="fail">views/failPage.jsp</result> </action> <action name="updateData" 
+			class="myStructmaven.actions.updateAction" method="updateStudent"> <result 
+			name="success" type="redirectAction">login.action</result> <result name="fail">views/failPage.jsp</result> 
+			</action> -->
+
+	</package>
+</struts>
